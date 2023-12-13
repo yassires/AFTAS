@@ -16,35 +16,27 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Member{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer num;
 
-    @NotNull(message = "Name cannot be null")
-    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
+
     private String name;
 
-    @NotNull(message = "Family name cannot be null")
-    @Size(min = 2, max = 50, message = "Family name must be between 2 and 50 characters")
     private String familyName;
 
-    @NotNull(message = "Access date cannot be null")
-    @PastOrPresent(message = "Access date must be in the past or present")
-    private Date accessDate;
 
-    @NotNull(message = "nationality cannot be null")
+    private Date accessionDate;
+
     private String nationality;
 
     @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocumentType;
 
-    @NotNull(message = "Identity number cannot be null")
-    @Size(min = 2, max = 50, message = "Identity number must be between 2 and 50 characters")
-    @Column(unique = true)
+
     private String identityNumber;
 
     @OneToMany(mappedBy = "member")
@@ -56,7 +48,6 @@ public class Member{
     private List<Hunting> hunting;
 
 
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
@@ -65,7 +56,7 @@ public class Member{
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
         Member member = (Member) o;
-        return getId() != null && Objects.equals(getId(), member.getId());
+        return getNum() != null && Objects.equals(getNum(), member.getNum());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.youcode.aftas.entities;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -13,7 +14,6 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Ranking {
@@ -24,10 +24,12 @@ public class Ranking {
     private Integer score;
 
     @ManyToOne
-    private Member member;
+    @JoinColumn(name = "code", insertable = false, updatable = false)
+    private Competition competition;
 
     @ManyToOne
-    private Competition competition;
+    @JoinColumn(name = "num", insertable = false, updatable = false)
+    private Member member;
 
     @Override
     public final boolean equals(Object o) {
