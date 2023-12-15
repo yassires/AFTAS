@@ -21,7 +21,7 @@ public class Fish {
 
     private String name;
 
-    private double averageWeight;
+    private Double averageWeight;
 
     @OneToMany(mappedBy = "fish")
     @ToString.Exclude

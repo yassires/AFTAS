@@ -20,7 +20,6 @@ import java.util.Objects;
 @Builder
 public class Member{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer num;
 
 

@@ -1,4 +1,4 @@
-package com.youcode.aftas.DTO.add;
+package com.youcode.aftas.DTO;
 
 import com.youcode.aftas.entities.IdentityDocumentType;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class AddMemberDto implements Serializable {
+public class MemberDto implements Serializable {
     @NotNull(message = "num cannot be null.")
     @Positive(message = "num cannot be negative.")
     private Integer num;
