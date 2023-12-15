@@ -17,13 +17,13 @@ import java.util.Objects;
 public class Level {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    private int level;
+    private Integer level;
 
     private String description;
 
-    private int points;
+    private Integer points;
 
     @OneToMany(mappedBy = "level")
     @ToString.Exclude
