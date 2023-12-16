@@ -1,18 +1,20 @@
 package com.youcode.aftas.Services;
 
+import com.youcode.aftas.DTO.CompetitionDto;
 import com.youcode.aftas.entities.Competition;
 import com.youcode.aftas.entities.Ranking;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface CompetitionService {
 
-    Competition getCompetitionById(Long id);
+    CompetitionDto getCompetitionByCode(String code);
 
-    List<Competition> getAllCompetitions();
+    List<CompetitionDto> getAllCompetitions();
 
-    Competition addCompetition(Competition competition);
+    CompetitionDto addCompetition(CompetitionDto competitionDto );
 
-    Ranking addMemberToCompetition(Ranking ranking);
 
 }
