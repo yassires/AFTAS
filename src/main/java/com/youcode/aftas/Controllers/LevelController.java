@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/levels")
+@RequestMapping("/api/level")
 @RequiredArgsConstructor
 public class LevelController {
 
