@@ -15,10 +15,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 public class Fish {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+    @Id
     private String name;
 
     private Double averageWeight;
@@ -38,7 +36,7 @@ public class Fish {
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
         Fish fish = (Fish) o;
-        return getId() != null && Objects.equals(getId(), fish.getId());
+        return getName() != null && Objects.equals(getName(), fish.getName());
     }
 
     @Override
