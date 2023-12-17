@@ -12,5 +12,7 @@ import java.util.Optional;
 
 public interface HuntingRepository extends JpaRepository<Hunting, Integer> {
     Optional<Hunting> findByFishAndCompetitionAndMember(Fish fish, Competition competition, Member member);
+    List<Hunting> findByCompetitionAndMember(Competition competition, Member member);
+
     List<HuntingDto> findByCompetitionId(Long competitionId);
     List<HuntingDto> findByMemberId(Long memberId);}

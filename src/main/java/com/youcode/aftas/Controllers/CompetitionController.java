@@ -1,6 +1,7 @@
 package com.youcode.aftas.Controllers;
 
 import com.youcode.aftas.DTO.CompetitionDto;
+import com.youcode.aftas.DTO.RankingDto;
 import com.youcode.aftas.Services.CompetitionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,10 @@ public class CompetitionController {
         return competitionService.addCompetition(competitionDto);
     }
 
+    @GetMapping("/score/{code}")
+    public List<RankingDto> calculateScore(@PathVariable String code){
+        return competitionService.calculateScore(code);
+    }
 
 
 }

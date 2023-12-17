@@ -1,19 +1,25 @@
 package com.youcode.aftas.Services.Impl;
 
 import com.youcode.aftas.DTO.CompetitionDto;
+import com.youcode.aftas.DTO.RankingDto;
 import com.youcode.aftas.Services.CompetitionService;
 import com.youcode.aftas.entities.Competition;
+import com.youcode.aftas.entities.Hunting;
 import com.youcode.aftas.entities.Ranking;
 import com.youcode.aftas.handlers.exception.OperationException;
 import com.youcode.aftas.handlers.exception.ResourceException;
 import com.youcode.aftas.repository.CompetitionRepository;
+import com.youcode.aftas.repository.HuntingRepository;
+import com.youcode.aftas.repository.RankingRepository;
 import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +29,8 @@ import java.util.stream.Collectors;
 public class CompetitionServiceImpl implements CompetitionService {
 
     private final CompetitionRepository competitionRepository;
+    private final RankingRepository rankingRepository;
+    private final HuntingRepository huntingRepository;
     private final ModelMapper mapper;
     @Override
     public CompetitionDto getCompetitionByCode(String code) {
@@ -74,6 +82,38 @@ public class CompetitionServiceImpl implements CompetitionService {
         return locationCode + "-" + formattedDate;
     }
 
+    @Override
+    public List<RankingDto> calculateScore(String code) {
+        Optional<Competition> optionalCompetition = competitionRepository.findById(code);
+        if (optionalCompetition.isEmpty()) {
+            throw new ResourceException("There is no competition with that code.");
+        }
+
+        List<Ranking> rankings = rankingRepository.findByCompetition(optionalCompetition.get());
+
+        List<Ranking> rankingsAfterCalcScore = rankings
+                .stream()
+                .peek(ranking -> {
+                    List<Hunting> userHunting = huntingRepository.findByCompetitionAndMember(ranking.getCompetition(), ranking.getMember());
+
+                    int huntScore = userHunting
+                            .stream()
+                            .mapToInt(hunting -> hunting.getFish().getLevel().getPoints() * hunting.getNumberOfFish())
+                            .sum();
+
+                    ranking.setScore(huntScore);
+                })
+                .sorted(Comparator.comparingInt(Ranking::getScore).reversed())
+                .peek(ranking -> ranking.setRank(rankings.indexOf(ranking) + 1))
+                .toList();
+
+        rankingRepository.saveAll(rankings);
+
+        return rankingsAfterCalcScore
+                .stream()
+                .map(element -> mapper.map(element, RankingDto.class))
+                .collect(Collectors.toList());
+    }
 
 
 }
