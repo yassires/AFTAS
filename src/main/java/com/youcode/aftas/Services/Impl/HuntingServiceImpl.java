@@ -50,14 +50,15 @@ public class HuntingServiceImpl implements HuntingService {
         if (member.isEmpty()) {
             throw new RuntimeException("there's no member with this number");
         }
-        Fish fish = fishRepository.findByName(huntingDto.getFish().getName());
+
+        Optional<Fish> fish = fishRepository.findById(huntingDto.getFish().getName());
         if (fish == null) {
             throw new RuntimeException("there's no fish with this name");
         }
 
 
-        if (fish.getAverageWeight() > huntingDto.getFish().getAverageWeight()) {
-            throw new RuntimeException("weight to small, the average weight for " + fish.getName() + ", is " + fish.getAverageWeight());
+        if (fish.get().getAverageWeight() > huntingDto.getFish().getAverageWeight()) {
+            throw new RuntimeException("weight to small, the average weight for " + fish.get().getName() + ", is " + fish.get().getAverageWeight());
         }
 
         Hunting hunting = mapper.map(huntingDto, Hunting.class);

@@ -16,26 +16,18 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 public class Member{
     @Id
     private Integer num;
-
-
     private String name;
-
     private String familyName;
-
-
     private Date accessionDate;
-
     private String nationality;
-
     @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocumentType;
-
-
+    @Column(unique = true)
     private String identityNumber;
 
     @OneToMany(mappedBy = "member")

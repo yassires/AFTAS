@@ -22,11 +22,16 @@ public class FishServiceImpl implements FishService {
     private final FishRepository fishRepository;
     private final LevelService levelService;
     private final ModelMapper modelMapper;
+
     @Override
     public Fish getFishById(Long id) {
-        return fishRepository.findById(id).orElseThrow(() -> new ResourceException("Fish id " + id + " not found"));
-
+        return null;
     }
+
+    /*@Override
+        public Fish getFishById(Long id) {
+            return fishRepository.findById(id).orElseThrow(() -> new ResourceException("Fish id " + id + " not found"));
+        }*/
     @Override
     public List<Fish> getAllFishes() {
         return fishRepository.findAll();
@@ -51,6 +56,11 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public void deleteFish(Long id) {
-        fishRepository.deleteById(id);
+
     }
+
+   /* @Override
+    public void deleteFish(Long id) {
+        fishRepository.deleteById(id);
+    }*/
 }

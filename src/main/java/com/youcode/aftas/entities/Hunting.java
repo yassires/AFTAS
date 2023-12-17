@@ -11,8 +11,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 public class Hunting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +21,15 @@ public class Hunting {
     private int numberOfFish;
 
     @ManyToOne
-    private Competition competition;
+    private Fish fish;
 
     @ManyToOne
     private Member member;
 
     @ManyToOne
-    private Fish fish;
+    private Competition competition;
+
+
 
     @Override
     public final boolean equals(Object o) {
