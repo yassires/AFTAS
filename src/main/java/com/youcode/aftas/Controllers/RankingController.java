@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/ranking")
-@RequiredArgsConstructor
 public class RankingController {
 
     private final RankingService rankingService;

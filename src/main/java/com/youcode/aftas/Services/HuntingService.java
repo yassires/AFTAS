@@ -10,7 +10,7 @@ public interface HuntingService {
 
     List<HuntingDto> getAllHunting();
     HuntingDto addHuntingResult(HuntingDto huntingDto);
-    List<HuntingDto> getHuntingsByCompetition(Long competitionId);
-    List<HuntingDto> getHuntingsByMember( Long memberId);
+    List<HuntingDto> getHuntingsByCompetition(String competitionCode);
+    List<HuntingDto> getHuntingsByMember( Integer memberId);
 
 }

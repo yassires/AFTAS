@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/level")
-@RequiredArgsConstructor
 public class LevelController {
 
     private final LevelService levelService;

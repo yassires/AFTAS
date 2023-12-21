@@ -14,6 +14,8 @@ import com.youcode.aftas.repository.RankingRepository;
 import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.DateTimeException;
@@ -113,6 +115,14 @@ public class CompetitionServiceImpl implements CompetitionService {
                 .stream()
                 .map(element -> mapper.map(element, RankingDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<CompetitionDto> getAllCompetitions(Pageable pageable) {
+        Page<Competition> competitions = competitionRepository.findAll(pageable);
+        return competitions.map(competition -> {
+            return mapper.map(competition, CompetitionDto.class);
+        });
     }
 
 

@@ -55,4 +55,9 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByIdentityNumber(identityNumber);
         return modelMapper.map(member, MemberDto.class);
     }
+
+    @Override
+    public List<Member> getMembersByCompetitionId(String competitionCode) {
+        return memberRepository.findMembersByCompetitionCode(competitionCode);
+    }
 }

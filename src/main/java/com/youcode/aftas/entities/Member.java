@@ -1,5 +1,6 @@
 package com.youcode.aftas.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +25,7 @@ public class Member{
     private Integer num;
     private String name;
     private String familyName;
-    private Date accessionDate;
+    private LocalDate accessionDate;
     private String nationality;
     @Enumerated(EnumType.STRING)
     private IdentityDocumentType identityDocumentType;
@@ -32,26 +34,11 @@ public class Member{
 
     @OneToMany(mappedBy = "member")
     @ToString.Exclude
+    @JsonIgnore
     private List<Ranking> rankings;
 
     @OneToMany(mappedBy = "member")
     @ToString.Exclude
+    @JsonIgnore
     private List<Hunting> hunting;
-
-
-    @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
-        Member member = (Member) o;
-        return getNum() != null && Objects.equals(getNum(), member.getNum());
-    }
-
-    @Override
-    public final int hashCode() {
-        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
-    }
 }

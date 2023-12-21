@@ -5,6 +5,7 @@ import com.youcode.aftas.Services.MemberService;
 import com.youcode.aftas.entities.Member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,12 @@ public class MemberController {
     @DeleteMapping("/{id}")
     public void deleteMember(@PathVariable("id") Integer num){
         memberService.deleteMember(num);
+    }
+
+    @GetMapping("/byCompetition/{competitionId}")
+    public ResponseEntity<List<Member>> getMembersByCompetitionId(@PathVariable String competitionId) {
+        List<Member> members = memberService.getMembersByCompetitionId(competitionId);
+        return ResponseEntity.ok(members);
     }
 
 }

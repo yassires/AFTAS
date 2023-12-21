@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -30,6 +31,9 @@ public class MemberDto implements Serializable {
 
     @NotBlank(message = "identity number cannot be blank.")
     private String identityNumber;
+
+    @NotNull(message = "accession Date cannot be null.")
+    private LocalDate accessionDate;
 
     private IdentityDocumentType identityDocument;
 }

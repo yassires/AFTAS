@@ -59,6 +59,7 @@ public class RankingServiceImpl implements RankingService {
             throw new RuntimeException("you can't register now, the register close before 24 hour.");
         }
 
+
         Ranking saved = rankingRepository.save(ranking);
         return modelMapper.map(saved, RankingDto.class);
     }

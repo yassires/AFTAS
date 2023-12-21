@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/fish")
-@RequiredArgsConstructor
 public class FishController {
 
     private final FishService fishService;

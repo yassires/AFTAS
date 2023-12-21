@@ -1,5 +1,6 @@
 package com.youcode.aftas.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -27,6 +28,7 @@ public class Level {
 
     @OneToMany(mappedBy = "level")
     @ToString.Exclude
+    @JsonIgnore
     private List<Fish> fish;
 
     @Override

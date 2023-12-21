@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Embeddable
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class RankingKey implements Serializable {
     private String code;
     private Integer num;

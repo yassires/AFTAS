@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/hunting")
-@RequiredArgsConstructor
 public class HuntingController {
 
     private final HuntingService huntingService;
@@ -25,15 +25,15 @@ public class HuntingController {
         }
     }
 
-    public ResponseEntity getHuntingByCompetition(@PathVariable Long competitionId) {
-        HuntingDto hunting = (HuntingDto) huntingService.getHuntingsByCompetition(competitionId);
+    public ResponseEntity getHuntingByCompetition(@PathVariable String competitionCode) {
+        HuntingDto hunting = (HuntingDto) huntingService.getHuntingsByCompetition(competitionCode);
         if(hunting == null) {
             return ResponseMessage.badRequest("There's no Hunting in the records");
         }else {
             return ResponseMessage.ok(hunting,"Success");
         }
     }
-    public ResponseEntity getHuntingByMember(@PathVariable Long memberId) {
+    public ResponseEntity getHuntingByMember(@PathVariable Integer memberId) {
         HuntingDto hunting = (HuntingDto) huntingService.getHuntingsByMember(memberId);
         if(hunting == null) {
             return ResponseMessage.badRequest("There's no Hunting in the records");

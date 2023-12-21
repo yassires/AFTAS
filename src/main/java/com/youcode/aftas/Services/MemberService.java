@@ -15,4 +15,7 @@ public interface MemberService {
     List<Member> searchMember(String name);
 
     void deleteMember(Integer num);
+
+    List<Member> getMembersByCompetitionId(String competitionCode);
+
 }

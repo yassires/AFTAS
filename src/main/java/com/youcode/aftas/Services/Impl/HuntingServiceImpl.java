@@ -51,14 +51,14 @@ public class HuntingServiceImpl implements HuntingService {
             throw new RuntimeException("there's no member with this number");
         }
 
-        Optional<Fish> fish = fishRepository.findById(huntingDto.getFish().getName());
+        Fish fish = fishRepository.findByName(huntingDto.getFish().getName());
         if (fish == null) {
             throw new RuntimeException("there's no fish with this name");
         }
 
 
-        if (fish.get().getAverageWeight() > huntingDto.getFish().getAverageWeight()) {
-            throw new RuntimeException("weight to small, the average weight for " + fish.get().getName() + ", is " + fish.get().getAverageWeight());
+        if (fish.getAverageWeight() > huntingDto.getFish().getAverageWeight()) {
+            throw new RuntimeException("weight to small, the average weight for " + fish.getName() + ", is " + fish.getAverageWeight());
         }
 
         Hunting hunting = mapper.map(huntingDto, Hunting.class);
@@ -93,13 +93,13 @@ public class HuntingServiceImpl implements HuntingService {
     }
 
     @Override
-    public List<HuntingDto> getHuntingsByCompetition(Long competitionId) {
-        return huntingRepository.findByCompetitionId(competitionId);
+    public List<HuntingDto> getHuntingsByCompetition(String competitionCode) {
+        return huntingRepository.findByCompetition_Code(competitionCode);
     }
 
     @Override
-    public List<HuntingDto> getHuntingsByMember(Long memberId) {
-    return huntingRepository.findByMemberId(memberId);
+    public List<HuntingDto> getHuntingsByMember(Integer memberId) {
+    return huntingRepository.findByMember_Num(memberId);
     }
 
 
