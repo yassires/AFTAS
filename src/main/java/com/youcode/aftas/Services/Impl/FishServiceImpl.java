@@ -37,8 +37,11 @@ public class FishServiceImpl implements FishService {
         return fishRepository.findAll();
     }
 
+
     @Override
     public FishDto addFish(FishDto fishDto) {
+
+
 
         if(fishRepository.findByName(fishDto.getName()) != null) {
             throw new ResourceException("Fish name " + fishDto.getName() + " already exist");

@@ -1,6 +1,7 @@
 package com.youcode.aftas.Services.Impl;
 
 import com.youcode.aftas.DTO.CompetitionDto;
+import com.youcode.aftas.DTO.FishDto;
 import com.youcode.aftas.DTO.HuntingDto;
 import com.youcode.aftas.Services.*;
 import com.youcode.aftas.entities.*;
@@ -79,29 +80,70 @@ public class HuntingServiceImpl implements HuntingService {
             throw new RuntimeException("The competition has ended. No more hunting results can be added.");
         }
 
-        Optional<Hunting> existsHunting = huntingRepository.findByFishAndCompetitionAndMember(hunting.getFish(), hunting.getCompetition(), hunting.getMember());
+
+        Optional<Hunting> existsHunting = huntingRepository.findByCompetitionAndMemberAndFish(hunting.getFish().getName(), hunting.getCompetition().getCode(), hunting.getMember().getNum());
         if (existsHunting.isPresent()) {
             Hunting hunt = existsHunting.get();
             hunt.setNumberOfFish(hunt.getNumberOfFish() + 1);
             Hunting merged = huntingRepository.save(hunt);
             return mapper.map(merged, HuntingDto.class);
         } else {
+
             hunting.setNumberOfFish(1);
+            hunting.setFish(fish);
+            hunting.setMember(member.get());
+            hunting.setCompetition(competition.get());
+
+
+
+           /* optionalRanking.get().setScore(calculateScoreOfMember(hunting.getMember().getNum(),hunting.getCompetition().getCode()));
+            System.out.println(optionalRanking.get().getId());
+            rankingService.updateRanking(new RankingKey(hunting.getCompetition().getCode(), hunting.getMember().getNum()),optionalRanking.get());*/
+
             Hunting saved = huntingRepository.save(hunting);
             return mapper.map(saved, HuntingDto.class);
         }
     }
+    public int calculateScoreOfMember(Integer memberId, String competitionId){
+        int score = 0;
+        List<HuntingDto> allHunting = getAllHuntingOfMemberInCompetition(memberId,competitionId);
 
-    @Override
-    public List<HuntingDto> getHuntingsByCompetition(String competitionCode) {
-        return huntingRepository.findByCompetition_Code(competitionCode);
+        for(HuntingDto huntingDto : allHunting){
+
+            score += huntingDto.getNumberOfFish() * huntingDto.getFish().getLevel().getPoints();
+        }
+
+        return score;
     }
+
+    public List<HuntingDto> getHuntingByCompetition(String competitionCode) {
+
+       /* return huntingRepository.findByCompetitionCode(competitionCode).stream()
+                .map(hunting -> {
+                            return HuntingDto.builder()
+                                    .numberOfFish(hunting.getNumberOfFish())
+                                    .fish(hunting.getFish())
+                                    .member(hunting.getMember())
+                                    .competition(hunting.getCompetition())
+                                    .build();
+                        })
+                .collect(Collectors.toList());*/
+       return huntingRepository.findByCompetitionCode(competitionCode).stream()
+                .map(hunting -> mapper.map(hunting, HuntingDto.class))
+                .collect(Collectors.toList());
+    }
+
+
 
     @Override
     public List<HuntingDto> getHuntingsByMember(Integer memberId) {
     return huntingRepository.findByMember_Num(memberId);
     }
 
+    @Override
+    public List<HuntingDto> getAllHuntingOfMemberInCompetition(Integer memberId, String competitionId){
+        return huntingRepository.getAllHuntingOfSameCompetitionAndSameMember(memberId,competitionId);
+    }
 
 
 }

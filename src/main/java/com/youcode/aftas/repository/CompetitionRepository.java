@@ -15,4 +15,9 @@ public interface CompetitionRepository extends JpaRepository<Competition, String
 
     Page<Competition> findAll(Pageable pageable);
 
+
+
+
+
+
 }

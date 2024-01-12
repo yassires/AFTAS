@@ -13,8 +13,6 @@ import java.time.LocalTime;
 @Setter
 public class CompetitionDto implements Serializable {
 
-    @NotNull(message = "code cannot be null.")
-    @NotBlank(message = "code cannot be blank.")
     private String code;
 
     @NotNull(message = "Date cannot be null.")
@@ -32,4 +30,8 @@ public class CompetitionDto implements Serializable {
 
     @NotNull(message = "amount cannot be null.")
     private Double amount;
+
+    @NotNull(message = "number of participants cannot be null.")
+    private int numberOfParticipants;
+
 }

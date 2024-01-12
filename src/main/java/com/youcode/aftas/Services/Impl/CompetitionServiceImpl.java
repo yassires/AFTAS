@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -116,6 +117,8 @@ public class CompetitionServiceImpl implements CompetitionService {
                 .map(element -> mapper.map(element, RankingDto.class))
                 .collect(Collectors.toList());
     }
+
+
 
     @Override
     public Page<CompetitionDto> getAllCompetitions(Pageable pageable) {

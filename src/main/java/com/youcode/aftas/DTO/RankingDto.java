@@ -9,6 +9,7 @@ public class RankingDto {
 
     private Integer rank;
     private Integer score;
+
     private CompetitionDto competition;
     private MemberDto member;
 }

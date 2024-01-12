@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/hunting")
@@ -16,8 +18,9 @@ public class HuntingController {
 
     private final HuntingService huntingService;
 
+    @GetMapping
     public ResponseEntity getAllHunting() {
-        HuntingDto hunting = (HuntingDto) huntingService.getAllHunting();
+        List<HuntingDto> hunting = huntingService.getAllHunting();
         if(hunting == null) {
             return ResponseMessage.badRequest("There's no Hunting in the records");
         }else {
@@ -25,8 +28,9 @@ public class HuntingController {
         }
     }
 
-    public ResponseEntity getHuntingByCompetition(@PathVariable String competitionCode) {
-        HuntingDto hunting = (HuntingDto) huntingService.getHuntingsByCompetition(competitionCode);
+    @GetMapping("/{competitionCode}")
+    public ResponseEntity getHuntingByCompetition(@PathVariable("competitionCode") String competitionCode) {
+        List<HuntingDto> hunting = huntingService.getHuntingByCompetition(competitionCode);
         if(hunting == null) {
             return ResponseMessage.badRequest("There's no Hunting in the records");
         }else {
@@ -42,6 +46,7 @@ public class HuntingController {
         }
     }
 
+    @PostMapping
     public ResponseEntity addHuntingResult(@Valid @RequestBody HuntingDto huntingDto) {
         HuntingDto hunting = huntingService.addHuntingResult(huntingDto);
         if(hunting == null) {

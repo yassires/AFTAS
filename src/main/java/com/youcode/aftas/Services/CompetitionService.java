@@ -24,4 +24,5 @@ public interface CompetitionService {
     Page<CompetitionDto> getAllCompetitions(Pageable pageable);
 
 
+
 }

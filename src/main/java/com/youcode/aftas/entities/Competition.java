@@ -1,5 +1,6 @@
 package com.youcode.aftas.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -40,10 +41,12 @@ public class Competition {
 
     @OneToMany(mappedBy = "competition")
     @ToString.Exclude
+    @JsonIgnore
     private List<Ranking> rankings;
 
     @OneToMany(mappedBy = "competition")
     @ToString.Exclude
+    @JsonIgnore
     private List<Hunting> hunting;
 
 
